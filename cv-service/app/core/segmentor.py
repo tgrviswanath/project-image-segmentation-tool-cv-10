@@ -26,8 +26,11 @@ PALETTE = [
 def _get_model():
     global _model
     if _model is None:
-        from ultralytics import YOLO
-        _model = YOLO(settings.YOLO_MODEL)
+        try:
+            from ultralytics import YOLO
+            _model = YOLO(settings.YOLO_MODEL)
+        except Exception as e:
+            raise FileNotFoundError(f"Segmentation model unavailable: {e}")
     return _model
 
 
